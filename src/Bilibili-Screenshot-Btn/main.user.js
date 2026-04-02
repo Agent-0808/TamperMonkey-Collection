@@ -1,18 +1,19 @@
 // ==UserScript==
 // @name         Bilibili 视频截图按钮
 // @namespace    http://tampermonkey.net/
-// @version      0.8.0.8.0.8
+// @version      0.8.1
 // @description  在投稿时间之后显示一个截屏按钮，点击后复制到粘贴板
 // @author       0808
 // @match        http*://www.bilibili.com/*
+// @match        http*://live.bilibili.com/*
 // @icon         https://www.bilibili.com/favicon.ico
 // @grant        none
 // @license      MIT
 // ==/UserScript==
- 
+
 (function () {
     "use strict";
- 
+
     /** 配置选项 **/
     const CONFIG = {
         logPrefix: "[视频截图按钮]", // 日志前缀
@@ -34,21 +35,22 @@
             backgroundColor: 'rgba(0,174,236, 1)'
         },
         pubDateSelector: '.pubdate-ip',
+        liveRoomTitleSelector: '[data-curbutton="joinFansClub"], .live-room-intro .title, .room-intro-main .title, .bilibili-live-player-info .room-title',
         checkInterval: 3000,
         buttonAdded: false // 标记按钮是否已添加
     };
- 
+
     /** 封装 console.log，自动添加前缀 **/
     function log(message) {
         console.log(`${CONFIG.logPrefix} ${message}`);
     }
- 
+
     /** 主初始化函数 **/
     function init() {
         log("脚本初始化");
         FindvideoEle();
     }
- 
+
     /** 查找视频元素并添加截图按钮 **/
     function FindvideoEle() {
         function f() {
@@ -61,7 +63,12 @@
         }
         const interval = setInterval(f, CONFIG.checkInterval);
     }
- 
+
+    /** 判断是否是直播页面 **/
+    function isLivePage() {
+        return window.location.hostname.includes('live.bilibili.com');
+    }
+
     /** 添加截图按钮 **/
     function addScreenShotEle(videoElement) {
         let SsIDname = videoElement.id + "_Sshot";
@@ -69,10 +76,10 @@
             let SsHtml = document.createElement("button");
             SsHtml.textContent = CONFIG.buttonText;
             SsHtml.className = CONFIG.buttonClass;
- 
+
             // 设置按钮样式
             Object.assign(SsHtml.style, CONFIG.buttonStyle);
- 
+
             // 添加悬停效果
             SsHtml.addEventListener("mouseover", function (event) {
                 SsHtml.style.backgroundColor = CONFIG.hoverStyle.backgroundColor;
@@ -80,15 +87,24 @@
             SsHtml.addEventListener("mouseout", function (event) {
                 SsHtml.style.backgroundColor = CONFIG.buttonStyle.backgroundColor;
             });
- 
-            // 找到投稿时间的元素
-            let pubDateElement = document.querySelector(CONFIG.pubDateSelector);
-            if (pubDateElement) {
-                SsHtml.setAttribute("id", SsIDname);
-                pubDateElement.insertAdjacentElement('afterend', SsHtml); // 在投稿时间元素后插入按钮
-                log("截图按钮已添加");
+
+            let targetElement;
+            if (isLivePage()) {
+                targetElement = document.querySelector(CONFIG.liveRoomTitleSelector);
+            } else {
+                targetElement = document.querySelector(CONFIG.pubDateSelector);
             }
- 
+
+            if (targetElement) {
+                SsHtml.setAttribute("id", SsIDname);
+                targetElement.insertAdjacentElement('afterend', SsHtml);
+                log("截图按钮已添加");
+            } else {
+                SsHtml.setAttribute("id", SsIDname);
+                videoElement.parentNode.insertBefore(SsHtml, videoElement.nextSibling);
+                log("截图按钮已添加（备用位置）");
+            }
+
             // 添加点击事件
             SsHtml.addEventListener("click", function (event) {
                 event.stopPropagation();
@@ -98,7 +114,7 @@
             log("截图按钮已存在，跳过添加");
         }
     }
- 
+
     /** 截图并复制到剪贴板 **/
     function takeScreenshot(videoElement) {
         var myCanvas = document.createElement('canvas');
@@ -116,7 +132,7 @@
             });
         });
     }
- 
+
     // 执行初始化
     init();
 })();

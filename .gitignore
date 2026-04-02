@@ -1,1 +1,4 @@
 *.html
+
+.trae/
+.vscode/
