@@ -35,7 +35,7 @@
             backgroundColor: 'rgba(0,174,236, 1)'
         },
         pubDateSelector: '.pubdate-ip',
-        liveRoomTitleSelector: '[data-curbutton="joinFansClub"], .live-room-intro .title, .room-intro-main .title, .bilibili-live-player-info .room-title',
+        liveRoomTitleSelector: '.follow-ctnr',
         checkInterval: 3000,
         buttonAdded: false // 标记按钮是否已添加
     };
