@@ -7,6 +7,8 @@
 // @match        https://t.bilibili.com/*
 // @match        https://space.bilibili.com/*
 // @match        https://www.bilibili.com/*
+// @icon         https://www.bilibili.com/favicon.ico
+// @license      MIT
 // @grant        GM_addStyle
 // @run-at       document-start
 // ==/UserScript==
@@ -246,16 +248,18 @@
     const waitForContainer = (callback, maxAttempts = 50) => {
         let attempts = 0;
         const check = () => {
+            // 检查当前页面是否有动态列表
             const container = document.querySelector('.bili-dyn-list');
-            if (container) {
+            const hasDynamicItems = document.querySelector(CONFIG.DYN_ITEM_SELECTOR);
+
+            if (container || hasDynamicItems) {
                 log('找到动态列表容器');
                 callback();
             } else if (attempts < maxAttempts) {
                 attempts++;
                 setTimeout(check, 200);
             } else {
-                log('未找到动态列表容器，尝试直接处理');
-                callback();
+                log('当前页面无动态列表，跳过处理');
             }
         };
         check();
