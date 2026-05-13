@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
-// @namespace    http://tampermonkey.net/
-// @version      0.9.0
+// @namespace    https://github.com/Agent-0808
+// @version      1.0.0
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -34,7 +34,15 @@
             'a[href*="tmall.com"]',
             '.opus-text-rich-hl.goods-taobao'
         ],
-        AD_KEYWORDS: [],
+        AD_KEYWORDS: [
+            '评论区随机抽一位粉丝',
+            '红包超级加码',
+            '我要红包555',
+            '好好吃饭886',
+            '粉丝红包589',
+            '嗖→',
+            '保存下图到 vx 扫一扫即可',
+        ],
         DYN_ITEM_SELECTOR: '.bili-dyn-list__item',
         CHECK_INTERVAL: 1000,
         DEFAULT_COLLAPSED: true,
