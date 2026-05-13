@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    http://tampermonkey.net/
-// @version      0.8.0.8
-// @description  检测并折叠 Bilibili 动态中的广告内容（淘宝商品、会员购等），支持点击展开
+// @version      0.9.0
+// @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
 // @match        https://space.bilibili.com/*
@@ -34,6 +34,7 @@
             'a[href*="tmall.com"]',
             '.opus-text-rich-hl.goods-taobao'
         ],
+        AD_KEYWORDS: [],
         DYN_ITEM_SELECTOR: '.bili-dyn-list__item',
         CHECK_INTERVAL: 1000,
         DEFAULT_COLLAPSED: true,
@@ -100,6 +101,16 @@
             font-weight: 500;
         }
 
+        .ad-collapse-rule {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.06);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: #e06c75;
+        }
+
         .ad-collapse-action {
             color: #00a1d6;
             font-size: 13px;
@@ -150,6 +161,10 @@
             .ad-collapse-info {
                 color: #aaa;
             }
+            .ad-collapse-rule {
+                background: rgba(255, 255, 255, 0.08);
+                color: #f08c98;
+            }
             .bili-dyn-list__item.ad-expanded {
                 border-color: #ff6b6b;
             }
@@ -165,19 +180,25 @@
         }
     };
 
-    // 检查元素是否包含广告
-    const isAdItem = (item) => {
+    // 检查元素是否匹配广告规则，返回 { matched, rule }
+    const getAdMatch = (item) => {
         for (const selector of CONFIG.AD_SELECTORS) {
             if (item.querySelector(selector)) {
                 log('检测到广告选择器:', selector);
-                return true;
+                return { matched: true, rule: selector };
             }
         }
-        return false;
+        for (const keyword of CONFIG.AD_KEYWORDS) {
+            if (item.textContent && item.textContent.includes(keyword)) {
+                log('检测到广告关键词:', keyword);
+                return { matched: true, rule: `关键词: "${keyword}"` };
+            }
+        }
+        return { matched: false, rule: '' };
     };
 
     // 创建折叠栏
-    const createCollapseBar = (item) => {
+    const createCollapseBar = (item, rule) => {
         const bar = document.createElement('div');
         bar.className = 'ad-collapse-bar';
         const authorName = item.querySelector('.bili-dyn-title__text')?.textContent?.trim() || '未知UP主';
@@ -188,7 +209,7 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
                 <span class="ad-collapse-badge">广告</span>
-                <span>${authorName} 的推广内容</span>
+                <span>${authorName} 命中 <code class="ad-collapse-rule">${rule}</code></span>
             </div>
             <span class="ad-collapse-action">点击展开</span>
         `;
@@ -224,14 +245,15 @@
         if (item.dataset.adProcessed === 'true') return false;
         item.dataset.adProcessed = 'true';
 
-        if (!isAdItem(item)) return false;
+        const match = getAdMatch(item);
+        if (!match.matched) return false;
 
         item.classList.add('ad-collapsed');
         if (!CONFIG.DEFAULT_COLLAPSED) {
             item.classList.add('ad-expanded');
         }
 
-        const bar = createCollapseBar(item);
+        const bar = createCollapseBar(item, match.rule);
         item.insertBefore(bar, item.firstChild);
 
         log('已折叠广告动态');
