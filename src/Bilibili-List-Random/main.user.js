@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili 列表随机播放
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Agent-0808
 // @version      0.8
 // @description  自动获取播放列表并随机播放视频
 // @author       0808

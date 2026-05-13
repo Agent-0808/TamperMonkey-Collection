@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         sb6657.cn 烂梗 (Bilibili直播版)
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Agent-0808
 // @version      0.8.0.8
 // @description  在B站直播间添加一个按钮,提供在线搜索sb6657烂梗，复制和一键发送
 // @author       sb6657.cn

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili 分享链接优化
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Agent-0808
 // @version      0.8.0.8
 // @description  简化Bilibili分享链接，移除多余的赛博狗屎并优化显示格式。
 // @author       0808

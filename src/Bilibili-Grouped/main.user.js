@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili-分组查看B站动态
-// @namespace    Agent-0808
+// @namespace    https://github.com/Agent-0808
 // @version      0.8.0.8
 // @description  通过关注分组，筛选B站时间线上的动态。
 // @author       Felix

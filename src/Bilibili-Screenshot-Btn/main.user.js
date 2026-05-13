@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili 视频截图按钮
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Agent-0808
 // @version      0.8.1
 // @description  在投稿时间之后显示一个截屏按钮，点击后复制到粘贴板
 // @author       0808

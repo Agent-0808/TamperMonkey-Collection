@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         全て歌詞の所為です。 歌詞情報コピー
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Agent-0808
 // @version      0.8.3
 // @description  「全て歌詞の所為です。」の歌詞ページで曲情報をコピー、または作者ページで作品リストをコピーするボタンを追加します。
 // @icon         https://lyrics.imicomweb.com/static/subekashi/image/icon.e63b371c17c1.ico
