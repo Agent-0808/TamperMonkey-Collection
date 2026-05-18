@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.2
+// @version      1.0.3
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -42,6 +42,9 @@
             '美団',
             '保存下图到 vx 扫一扫即可',
             '直接冲',
+            '赶紧囤',
+            '薅起来',
+
             '我要红包555',
             '好好吃饭886',
             '粉丝红包589',
