@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.3
+// @version      1.0.4
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
