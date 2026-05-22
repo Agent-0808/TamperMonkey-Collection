@@ -10,6 +10,7 @@
 // @grant        unsafeWindow
 // @connect      static.kivo.wiki
 // @run-at       document-idle
+// @license      MIT
 // ==/UserScript==
 
 (function() {
