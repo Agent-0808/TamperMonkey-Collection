@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         sb6657.cn 烂梗 (Bilibili直播版)
 // @namespace    https://github.com/Agent-0808
-// @version      0.8.0.8
+// @version      0.8.1
 // @description  在B站直播间添加一个按钮,提供在线搜索sb6657烂梗，复制和一键发送
 // @author       sb6657.cn
 // @author       Agent-0808
@@ -268,7 +268,7 @@
     // ==========================================
     function doInsertButton() {
         // 查找 底栏控制区
-        const toolbar = querySelectorDeep('.bottom-actions') || querySelectorDeep('.chat-control-panel'); 
+        const toolbar = querySelectorDeep('.icon-right-part') || querySelectorDeep('.chat-control-panel');
         
         if (toolbar && !toolbar.querySelector('#meme-btn-id')) {
             const btn = createElement('button', { 
