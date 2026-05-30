@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.4
+// @version      1.0.5
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -46,6 +46,10 @@
             '赶紧囤',
             '薅起来',
             '领券下单',
+            'copy本段话',
+            '抓紧囤',
+            '线下一',
+            '左右到手',
 
             '我要红包555',
             '好好吃饭886',
