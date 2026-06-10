@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.5
+// @version      1.0.6
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -44,10 +44,13 @@
             '保存下图到 vx 扫一扫即可',
             '直接冲',
             '赶紧囤',
+            '抓紧囤',
+            '直接薅',
             '薅起来',
             '领券下单',
             'copy本段话',
-            '抓紧囤',
+            'Copy这条信息',
+            '闭眼入',
             '线下一',
             '左右到手',
 
