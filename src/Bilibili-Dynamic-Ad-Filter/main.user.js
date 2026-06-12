@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.6
+// @version      1.0.7
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -39,9 +39,11 @@
             '评论区随机抽一位粉丝',
             '超级加码',
             '嗖',
+            '搜→',
             '美団',
             '手陶',
-            '保存下图到 vx 扫一扫即可',
+            '闪购栏目',
+            '保存下图到',
             '直接冲',
             '赶紧囤',
             '抓紧囤',
@@ -61,6 +63,7 @@
             '332211',
             '223399',
             '888444',
+            '155155', 
         ],
         DYN_ITEM_SELECTOR: '.bili-dyn-list__item',
         CHECK_INTERVAL: 1000,
