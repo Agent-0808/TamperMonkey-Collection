@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 动态广告折叠
 // @namespace    https://github.com/Agent-0808
-// @version      1.0.8
+// @version      1.0.9
 // @description  检测并折叠 Bilibili 动态中的广告内容
 // @author       Agent-0808
 // @match        https://t.bilibili.com/*
@@ -44,6 +44,7 @@
             '手陶',
             '闪购栏目',
             '闪购频道',
+            '平台补贴',
             '保存下图到',
             '直接冲',
             '赶紧囤',
@@ -58,6 +59,7 @@
             '左右到手',
             '专属福利',
             '无门槛红包',
+            '外卖战',
 
             '我要红包555',
             '好好吃饭886',
