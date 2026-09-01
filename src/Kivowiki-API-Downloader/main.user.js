@@ -6,6 +6,7 @@
 // @author       Agent-0808
 // @match        https://api.kivo.wiki/api/v1/data/spines/*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js
+// @icon         https://static.kivo.wiki/images/students/%E9%9C%9E%E6%B3%BD%20%E7%BE%8E%E6%B8%B8/original/gallery/%E5%88%9D%E5%A7%8B%E7%AB%8B%E7%BB%98%E5%B7%AE%E5%88%86/CH0145_spr_10.png?x-oss-process=image/resize,h_130
 // @grant        GM_xmlhttpRequest
 // @grant        unsafeWindow
 // @connect      static.kivo.wiki
