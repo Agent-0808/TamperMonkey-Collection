@@ -6,3 +6,6 @@
 
 修改 by DeepSeek V4 Pro（网页版）
 
+### 喜报
+
+喜报：2026年9月10日，[D老师官网下线了V4 Pro与Vision](https://api-docs.deepseek.com/zh-cn/news/news260910)，统一使用V4.1 flash，本脚本享年2天。可喜可贺，可口可乐
