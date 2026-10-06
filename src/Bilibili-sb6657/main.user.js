@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         sb6657.cn 烂梗 (Bilibili直播版)
 // @namespace    https://github.com/Agent-0808
-// @version      0.8.2
+// @version      1.0.0-beta1
 // @description  在B站直播间添加一个按钮,提供在线搜索sb6657烂梗，复制和一键发送
 // @author       sb6657.cn
 // @author       Agent-0808
@@ -10,7 +10,9 @@
 // @include      https://*.bilibili.com/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
+// @connect      api.hguofichp.cn
 // @connect      hguofichp.cn
+// @connect      sb6657.cn
 // @connect      web-static-res-edge-speedtest-b1-hk.dahi.edu.eu.org
 // @icon         https://apic.douyucdn.cn/upload/avatar_v3/202510/39e8bc3233ca412fa991a18bd024cfbc_middle.jpg
 // @grant        GM_info
@@ -213,7 +215,7 @@
 
         function connect() {
             try {
-                const WS_URL = "wss://hguofichp.cn:10086/machine/GFPlugin/ws/" + sid;
+                const WS_URL = "wss://api.hguofichp.cn/machine/GFPlugin/ws/" + sid;
                 const WSCtor = (typeof unsafeWindow !== 'undefined' && unsafeWindow.WebSocket) ? unsafeWindow.WebSocket : (window.WebSocket || WebSocket);
                 const ws = new WSCtor(WS_URL);
                 wsManager.instance = ws;
@@ -244,13 +246,69 @@
         connect();
     })();
 
+    const API_QUERY_URL = "https://api.hguofichp.cn/machine/Query";
+    const API_HEADERS = {
+        "Content-Type": "application/json",
+        "dpahjdoiaw": "c2I2NjU35o+S5Lu2"
+    };
+
     sBtn.onclick = () => {
         const val = input.value.trim();
         if (!val) return;
-        fetch("https://hguofichp.cn:10086/machine/Query", {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ D: "油猴", barrage: val })
-        }).then(r => r.json()).then(res => { if(res.code === 200) render(res.data); });
+
+        const body = JSON.stringify({
+            D: "油猴",
+            barrage: val,
+            QueryBarrage: val
+        });
+
+        const handleSuccess = (text) => {
+            try {
+                const res = JSON.parse(text);
+                if (res.code === 200 || res.code === "200") {
+                    render(res.data || []);
+                } else {
+                    showMsg("未找到相关弹幕");
+                    render([]);
+                }
+            } catch (e) {
+                console.error("[sb6657] 解析失败:", e);
+                showMsg("❌ 搜索结果解析异常");
+            }
+        };
+
+        const handleError = () => {
+            showMsg("❌ 搜索失败，网络连接异常");
+        };
+
+        if (typeof GM_xmlhttpRequest === "function") {
+            GM_xmlhttpRequest({
+                method: "POST",
+                url: API_QUERY_URL,
+                headers: API_HEADERS,
+                data: body,
+                timeout: 10000,
+                onload: (res) => {
+                    if (res.status === 200) {
+                        handleSuccess(res.responseText);
+                    } else {
+                        showMsg("❌ 搜索失败 HTTP " + res.status);
+                    }
+                },
+                onerror: handleError,
+                ontimeout: handleError
+            });
+            return;
+        }
+
+        fetch(API_QUERY_URL, {
+            method: "POST",
+            headers: API_HEADERS,
+            body: body
+        })
+            .then(r => r.text())
+            .then(handleSuccess)
+            .catch(handleError);
     };
 
     function showMsg(txt) {
